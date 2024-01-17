@@ -40,6 +40,8 @@ public class MonsterManager : Singleton<MonsterManager>
             }
             
             monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible;
+            monsterControl.Monster.transform.Translate(Vector3.right * monsterControl.MoveSpeed * Time.deltaTime);
+
         }
     }
 
