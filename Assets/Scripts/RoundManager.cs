@@ -15,21 +15,21 @@ public class RoundManager : MonoBehaviour
         while (enabled)
         {
             yield return null;
-            _currentRoundCountdown++;
+            _currentRoundCountdown++; //This makes it start in the Fibonacci = 1
             
             var monsterAmount = UtilMath.GetFibonacciRecursively(_currentRoundCountdown);
-
-            RecursivelySpawnAllCreatures(monsterAmount);
+            var rotation = Quaternion.Euler(new Vector3(0, 0, MonsterManager.Instance.GetRandomZRotation()));
+            
+            RecursivelySpawnAllCreatures(rotation, monsterAmount);
             yield return new WaitUntil(AllCreaturesAreNotVisible);
         }
     }
 
-    private void RecursivelySpawnAllCreatures(int n)
+    private void RecursivelySpawnAllCreatures(Quaternion rotation, int n)
     {
-        if(n < 0) return;
 
-        MonsterManager.Instance.AddMonster();
-        RecursivelySpawnAllCreatures(n - 1);
+        MonsterManager.Instance.AddMonster(rotation);
+        RecursivelySpawnAllCreatures(rotation, n - 1);
     }
 
     private bool AllCreaturesAreNotVisible()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Reuse.Utils;
 using UnityEngine;
 
 public class MonsterManager : Singleton<MonsterManager>
@@ -11,9 +12,10 @@ public class MonsterManager : Singleton<MonsterManager>
         public float RemainingTimeToBeDestroyed;
         public float MoveSpeed;
         
-        public MonsterControl(GameObject monster, float timeLeft)
+        public MonsterControl(GameObject monster, float speed, float timeLeft)
         {
             Monster = monster.GetComponent<Renderer>();
+            MoveSpeed = speed;
             RemainingTimeToBeDestroyed = timeLeft;
         }
     }
@@ -30,6 +32,7 @@ public class MonsterManager : Singleton<MonsterManager>
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minZRotation = 0f;
     [SerializeField] private float maxZRotation = 360f;
+ 
     public void Update()
     {
         var time = Time.deltaTime;
@@ -48,20 +51,17 @@ public class MonsterManager : Singleton<MonsterManager>
             }
             
             monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible;
-            monsterControl.Monster.transform.Translate(Vector3.right * monsterControl.MoveSpeed * Time.deltaTime);
-
+            monsterControl.Monster.transform.Translate(Vector3.right * (monsterControl.MoveSpeed * Time.deltaTime));
         }
     }
 
-    public void AddMonster()
+    public void AddMonster(Quaternion rotation)
     {
         //Instantiate with pooling
-        var go = Spawner.Spawn(monsterPrefab);
-        
-        if(go == null) return;
-        
+        var go = Spawner.Spawn(monsterPrefab,Vector3.zero, rotation, transform);
+
         //Add to monster list
-        _monsterControls.Add(new MonsterControl(go, timeUntilMonsterDestroyed));
+        _monsterControls.Add(new MonsterControl(go, GetRandomSpeed(),timeUntilMonsterDestroyed));
     }
 
     private bool CheckDestruction(MonsterControl monsterControl, float time)
@@ -84,5 +84,15 @@ public class MonsterManager : Singleton<MonsterManager>
     public bool HasAllMonsterBeenDestroyed()
     {
         return _monsterControls.Count == 0;
+    }
+
+    public float GetRandomZRotation()
+    {
+        return UtilRandom.GetRandomFloatInRange(minZRotation, maxZRotation);
+    }
+
+    public float GetRandomSpeed()
+    {
+        return UtilRandom.GetRandomFloatInRange(minSpeed, maxSpeed);
     }
 }
