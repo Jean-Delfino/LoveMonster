@@ -26,7 +26,7 @@ public class RoundManager : MonoBehaviour
             RecursivelySpawnAllCreatures(rotation, monsterAmount);
             RoundStartUIUpdate(monsterAmount);
 
-            var elapsedTime = 0f;
+            _currentRoundElapsedTimer = 0f;
 
             while (!AllCreaturesAreNotVisible())
             {
@@ -34,7 +34,8 @@ public class RoundManager : MonoBehaviour
                 
                 yield return null;
             }
-
+            
+            roundUI.SetRemainingMonster(0);
             yield return new WaitForSeconds(waitTimeAfterRoundOver);
         }
     }
