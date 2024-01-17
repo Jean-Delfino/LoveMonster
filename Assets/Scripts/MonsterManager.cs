@@ -20,7 +20,7 @@ public class MonsterManager : Singleton<MonsterManager>
     }
 
     private readonly List<MonsterControl> _monsterControls = new();
-    private int aliveMonster = 0;
+    private int _aliveMonsters = 0;
 
     [Space] [Header("MONSTER")] [Space]
     [SerializeField] private GameObject monsterPrefab;
@@ -50,7 +50,12 @@ public class MonsterManager : Singleton<MonsterManager>
                 continue;
             }
             
-            monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible;
+            if (!monsterControl.Monster.isVisible)
+            {
+                monsterControl.SetToBeDestroyed = true;
+                _aliveMonsters--;
+                continue;
+            }
             monsterControl.Monster.transform.Translate(Vector3.right * (monsterControl.MoveSpeed * Time.deltaTime));
         }
     }
@@ -62,6 +67,7 @@ public class MonsterManager : Singleton<MonsterManager>
 
         //Add to monster list
         _monsterControls.Add(new MonsterControl(go, GetRandomSpeed(),timeUntilMonsterDestroyed));
+        _aliveMonsters++;
     }
 
     private bool CheckDestruction(MonsterControl monsterControl, float time)
@@ -83,17 +89,12 @@ public class MonsterManager : Singleton<MonsterManager>
 
     public bool HasAllMonsterBeenDestroyed()
     {
-        return _monsterControls.Count == 0;
+        return _aliveMonsters == 0;
     }
-    
-    
-    //From the view of the user the monster not visible could count as dead
-    //If this is something wanted, we just need to use a extra variable to count the alive monster
-    //Increased in the 
-    //And change the monster monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible to also decrease the new value of the variable
+
     public int AliveMonsters()
     {
-        return _monsterControls.Count;
+        return _aliveMonsters;
     }
     
     public float GetRandomZRotation()
