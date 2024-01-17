@@ -27,6 +27,7 @@ public class RoundManager : MonoBehaviour
 
     private void RecursivelySpawnAllCreatures(Quaternion rotation, int n)
     {
+        if(n < 1) return;
 
         MonsterManager.Instance.AddMonster(rotation);
         RecursivelySpawnAllCreatures(rotation, n - 1);
