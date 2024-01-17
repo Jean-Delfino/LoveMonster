@@ -20,9 +20,16 @@ public class MonsterManager : Singleton<MonsterManager>
 
     private readonly List<MonsterControl> _monsterControls = new();
 
+    [Space] [Header("MONSTER")] [Space]
+    [SerializeField] private GameObject monsterPrefab;
+
+    [Space] [Header("MONSTER SPAWN VARIABLE")] [Space]
     [SerializeField] private float timeUntilMonsterDestroyed = 1f;
 
-    [SerializeField] private GameObject monsterPrefab;
+    [SerializeField] private float minSpeed = 0.3f;
+    [SerializeField] private float maxSpeed = 5.0f;
+    [SerializeField] private float minZRotation = 0f;
+    [SerializeField] private float maxZRotation = 360f;
     public void Update()
     {
         var time = Time.deltaTime;
