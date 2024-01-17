@@ -9,19 +9,33 @@ public class MonsterManager : Singleton<MonsterManager>
         public Renderer Monster;
         public bool SetToBeDestroyed;
         public float RemainingTimeToBeDestroyed;
+
+        public MonsterControl(GameObject monster, float timeLeft)
+        {
+            Monster = monster.GetComponent<Renderer>();
+            RemainingTimeToBeDestroyed = timeLeft;
+        }
     }
 
     private readonly List<MonsterControl> _monsterControls = new();
 
     [SerializeField] private float timeUntilMonsterDestroyed = 1f;
+
+    [SerializeField] private GameObject monsterPrefab;
     public void Update()
     {
         var time = Time.deltaTime;
-        foreach (var monsterControl in _monsterControls)
+        for (int i = 0; i < _monsterControls.Count; i++)
         {
+            var monsterControl = _monsterControls[i];
+            
             if (monsterControl.SetToBeDestroyed)
             {
-                CheckDestruction(monsterControl, time);
+                if (!CheckDestruction(monsterControl, time)) return;
+                
+                RemoveMonster(i);
+                i--;
+                
                 return;
             }
             
@@ -32,18 +46,29 @@ public class MonsterManager : Singleton<MonsterManager>
     public void AddMonster()
     {
         //Instantiate with pooling
-        //Add to monster array
+        var go = Spawner.Spawn(monsterPrefab);
+        
+        if(go == null) return;
+        
+        //Add to monster list
+        _monsterControls.Add(new MonsterControl(go, timeUntilMonsterDestroyed));
     }
 
-    private void CheckDestruction(MonsterControl monsterControl, float time)
+    private bool CheckDestruction(MonsterControl monsterControl, float time)
     {
         if (monsterControl.RemainingTimeToBeDestroyed < 0)
         {
-            //Destroy by pooling it
-            return;
+            return true;
         }
 
         monsterControl.RemainingTimeToBeDestroyed -= time;
+        return false;
+    }
+
+    private void RemoveMonster(int index)
+    {
+        Spawner.DeSpawn(_monsterControls[index].Monster.gameObject);
+        _monsterControls.RemoveAt(index);
     }
     
 }
