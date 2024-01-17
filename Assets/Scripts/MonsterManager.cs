@@ -9,7 +9,8 @@ public class MonsterManager : Singleton<MonsterManager>
         public Renderer Monster;
         public bool SetToBeDestroyed;
         public float RemainingTimeToBeDestroyed;
-
+        public float MoveSpeed;
+        
         public MonsterControl(GameObject monster, float timeLeft)
         {
             Monster = monster.GetComponent<Renderer>();
@@ -72,5 +73,9 @@ public class MonsterManager : Singleton<MonsterManager>
         Spawner.DeSpawn(_monsterControls[index].Monster.gameObject);
         _monsterControls.RemoveAt(index);
     }
-    
+
+    public bool HasAllMonsterBeenDestroyed()
+    {
+        return _monsterControls.Count == 0;
+    }
 }
