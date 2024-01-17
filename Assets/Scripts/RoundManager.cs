@@ -21,20 +21,18 @@ public class RoundManager : MonoBehaviour
             _currentRoundCountdown++;
             
             var monsterAmount = UtilMath.GetFibonacciRecursively(_currentRoundCountdown);
-            var monsterRenderers = new Renderer[monsterAmount];
-            
-            RecursivelySpawnAllCreatures(monsterRenderers, monsterAmount);
+
+            RecursivelySpawnAllCreatures(monsterAmount);
             yield return new WaitUntil(AllCreaturesAreNotVisible);
         }
     }
 
-    private void RecursivelySpawnAllCreatures(Renderer[] monster, int n)
+    private void RecursivelySpawnAllCreatures(int n)
     {
         if(n < 0) return;
-        
-        //Instantiate with pooling
-        //Add to monster array
-        RecursivelySpawnAllCreatures(monster, n - 1);
+
+        MonsterManager.Instance.AddMonster();
+        RecursivelySpawnAllCreatures(n - 1);
     }
 
     private bool AllCreaturesAreNotVisible()
