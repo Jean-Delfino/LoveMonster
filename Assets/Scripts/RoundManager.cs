@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
 
 public class RoundManager : MonoBehaviour
@@ -10,7 +7,7 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
-        
+        StartCoroutine(ProcessRounds());
     }
 
     private IEnumerator ProcessRounds()
@@ -37,6 +34,6 @@ public class RoundManager : MonoBehaviour
 
     private bool AllCreaturesAreNotVisible()
     {
-        return true;
+        return MonsterManager.Instance.HasAllMonsterBeenDestroyed();
     }
 }
