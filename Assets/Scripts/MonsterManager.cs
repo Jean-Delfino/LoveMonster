@@ -20,6 +20,7 @@ public class MonsterManager : Singleton<MonsterManager>
     }
 
     private readonly List<MonsterControl> _monsterControls = new();
+    private int aliveMonster = 0;
 
     [Space] [Header("MONSTER")] [Space]
     [SerializeField] private GameObject monsterPrefab;
@@ -84,7 +85,17 @@ public class MonsterManager : Singleton<MonsterManager>
     {
         return _monsterControls.Count == 0;
     }
-
+    
+    
+    //From the view of the user the monster not visible could count as dead
+    //If this is something wanted, we just need to use a extra variable to count the alive monster
+    //Increased in the 
+    //And change the monster monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible to also decrease the new value of the variable
+    public int AliveMonsters()
+    {
+        return _monsterControls.Count;
+    }
+    
     public float GetRandomZRotation()
     {
         return UtilRandom.GetRandomFloatInRange(minZRotation, maxZRotation);
