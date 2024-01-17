@@ -31,12 +31,12 @@ public class MonsterManager : Singleton<MonsterManager>
             
             if (monsterControl.SetToBeDestroyed)
             {
-                if (!CheckDestruction(monsterControl, time)) return;
+                if (!CheckDestruction(monsterControl, time)) continue;
                 
                 RemoveMonster(i);
                 i--;
                 
-                return;
+                continue;
             }
             
             monsterControl.SetToBeDestroyed = !monsterControl.Monster.isVisible;
