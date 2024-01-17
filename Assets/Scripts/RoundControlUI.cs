@@ -21,6 +21,6 @@ public class RoundControlUI : MonoBehaviour
 
     public void UpdateTimer(float totalTime)
     {
-        roundTimeCounts.text = $"{totalTime}";
+        roundTimeCounts.text = $"{totalTime:F2}";
     }
 }
