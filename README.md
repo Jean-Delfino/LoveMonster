@@ -11,39 +11,39 @@ The primary objective is to implement a dynamic Monster run game with specific b
 
 ## Requirements
 
-### Rounds
+### Rounds (Done)
 
 - The game should be in rounds.
 
-### Round count
+### Round count (Done)
 
 - With each round, the Fibonacci sequence should advance.
 - There is no limit in how many rounds is possible to have. 
 
-### Round End
+### Round End (Done)
 
 - After all Monsters have left the screen, the round ends.
 - There should be a brief interval after one round ends before another begins.
 
-### Monster Instantiation per round
+### Monster Instantiation per round (Done)
 
-- Implement the instantiation of Monsters in a Fibonacci sequence based on the round number. Utilize object pooling techniques and DO NOT use loops (such as `foreach`, `for`, `while`, and `do/while`).
+- Implement the instantiation of Monsters in a Fibonacci sequence based on the round number. Utilize object pooling techniques and DO NOT use loops (such as `foreach`, `for`, `while`, and `do/while`). (Used recursion, both in Fibonacci and Spawn) 
 
-### Monster Dynamics
+### Monster Dynamics (Done)
 
 - Ensure that each Monster's velocity is randomized, but all moving in the same direction.
 
-### Monster Destruction
+### Monster Destruction (Done)
 
 - Program Monsters to automatically destroy themselves one second after moving out of the screen boundaries and be pooled.
 
-### User Interface
+### User Interface (Done)
 
   - Develop a simple UI to display the total number of Monsters created.
   - Include a timer to show the elapsed time since the round started.
   - Use TextMeshPro
 
-### Responsiveness
+### Responsiveness (Done)
 
   - Ensure that both the UI elements and the Monster destruction mechanics are responsive to the size of the any screen.
 
