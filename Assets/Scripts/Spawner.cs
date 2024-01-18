@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Spawner : Singleton<Spawner>
 {
-    [SerializeField] private List<GameObject> initialPool;
+    [SerializeField] private GameObject[] initialPool;
     private readonly Dictionary<string, Queue<GameObject>> _pool = new();
         
     [Serializable]
@@ -36,7 +36,7 @@ public class Spawner : Singleton<Spawner>
         }
     }
 
-    public static void SendToPool(List<GameObject> alreadyInstantiated)
+    public static void SendToPool(GameObject[] alreadyInstantiated)
     {
         foreach (var go in alreadyInstantiated)
         {
