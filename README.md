@@ -52,7 +52,7 @@ The primary objective is to implement a dynamic Monster run game with specific b
 - Keep performance optimization in mind, particularly with regards to the Monster creation and destruction processes.
 - Testing on various screen sizes is recommended to ensure responsiveness and functionality.
 
-## Additional (Not Needed)
+## Additional (Not Needed) (Done?)
 
-- Add Unit Tests using Unity Test Framework (UTF)
+- Add Unit Tests using Unity Test Framework (UTF) (I never used this tool, so one of my test didn't work while I was testing in play mode, even if in the unity play mode it execute without errors)
 - Feel free to add more information on the UI and other features or functionalities that you judge that could help the user.
