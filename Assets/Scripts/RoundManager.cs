@@ -12,7 +12,8 @@ public class RoundManager : MonoBehaviour
     {
         StartCoroutine(ProcessRounds());
     }
-
+    
+    //Could be done using Update, but the code structure would be a lot different
     private IEnumerator ProcessRounds()
     {
         while (enabled)
@@ -21,6 +22,8 @@ public class RoundManager : MonoBehaviour
             _currentRoundCountdown++; //This makes it start in the Fibonacci = 1
             
             var monsterAmount = UtilMath.GetFibonacciRecursively(_currentRoundCountdown);
+            
+            //Generate all monster direction this way
             var rotation = Quaternion.Euler(new Vector3(0, 0, MonsterManager.Instance.GetRandomZRotation()));
             
             RecursivelySpawnAllCreatures(rotation, monsterAmount);

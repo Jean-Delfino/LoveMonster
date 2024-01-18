@@ -27,7 +27,7 @@ public class MonsterManager : Singleton<MonsterManager>
 
     [Space] [Header("MONSTER SPAWN VARIABLE")] [Space]
     [SerializeField] private float timeUntilMonsterDestroyed = 1f;
-
+    
     [SerializeField] private float minSpeed = 0.3f;
     [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float minZRotation = 0f;
@@ -50,12 +50,14 @@ public class MonsterManager : Singleton<MonsterManager>
                 continue;
             }
             
+            //This may not work in editor if you keep the scene camera in the monster
             if (!monsterControl.Monster.isVisible)
             {
                 monsterControl.SetToBeDestroyed = true;
                 _aliveMonsters--;
                 continue;
             }
+            
             monsterControl.Monster.transform.Translate(Vector3.right * (monsterControl.MoveSpeed * Time.deltaTime));
         }
     }
