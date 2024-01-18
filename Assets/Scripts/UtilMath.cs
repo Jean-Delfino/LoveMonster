@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 public static class UtilMath
 {
-    //This is the only way without using loops
-    //The other way would be using a int[] as memo, but we would need to set all vector values as -1
-
     public static int GetFibonacciRecursively(int n)
     {
         if (n < 0)
@@ -14,17 +11,18 @@ public static class UtilMath
             throw new ArgumentException("Input must be a non-negative integer.");
         }
         
-        Dictionary<int, int> memo = new();
+        //This works because C# starts everything at 0, and the only Fibonacci = 0 is in the 0 position, which is unreachable
+        int[] memo = new int[n];
 
         return FibonacciRecursion(memo, n);
     }
 
-    private static int FibonacciRecursion(Dictionary<int, int> fibonacciMemo, int n)
+    private static int FibonacciRecursion(int[] fibonacciMemo, int n)
     {
         if (n < 2) return n; //0, 1, 1
 
-        if (fibonacciMemo.ContainsKey(n)) return fibonacciMemo[n];
+        if (fibonacciMemo[n-1] != 0) return fibonacciMemo[n-1];
 
-        return fibonacciMemo[n] = FibonacciRecursion(fibonacciMemo, n - 1) + FibonacciRecursion(fibonacciMemo, n - 2);
+        return fibonacciMemo[n-1] = FibonacciRecursion(fibonacciMemo, n - 1) + FibonacciRecursion(fibonacciMemo, n - 2);
     }
 }
